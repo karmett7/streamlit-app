@@ -1,44 +1,23 @@
-
 import streamlit as st
 from utils import apply_light_theme
-apply_light_theme()
 
-
-st.markdown(
-    """
-    <style>
-    /* Main background */
-    .stApp {
-        background-color: #ffffff;
-        color: #000000;
-    }
-
-    /* Sidebar */
-    section[data-testid="stSidebar"] {
-        background-color: #f2f2f2;
-    }
-
-    /* Text color */
-    h1, h2, h3, h4, h5, h6, p, span, label {
-        color: #000000 !important;
-    }
-
-    /* Dataframe background */
-    .stDataFrame {
-        background-color: #ffffff;
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
+# -------------------------------------------------
+# MUST BE FIRST
+# -------------------------------------------------
 st.set_page_config(
     page_title="Urban Data Analysis Dashboard",
     page_icon="📊",
     layout="wide"
 )
 
+# -------------------------------------------------
+# Apply Light Theme (GLOBAL CSS)
+# -------------------------------------------------
+apply_light_theme()
+
+# -------------------------------------------------
+# Page Content
+# -------------------------------------------------
 st.title("📊 Urban Data Analysis Dashboard")
 
 st.markdown(
@@ -95,3 +74,6 @@ st.markdown(
 )
 
 st.markdown("---")
+
+st.success("👉 Use the sidebar to navigate through different sections of the app.")
+

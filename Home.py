@@ -1,6 +1,29 @@
 import streamlit as st
 from utils import apply_light_theme
 
+def apply_home_background():
+    st.markdown(
+        """
+        <style>
+        /* Home page background image */
+        .stApp {
+            background: linear-gradient(
+                rgba(255,255,255,0.85),
+                rgba(255,255,255,0.85)
+            ),
+            url("assets/bg.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+apply_home_background()
+
+
 # -------------------------------------------------
 # MUST BE FIRST
 # -------------------------------------------------

@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-
 import streamlit as st
 from utils import list_city_files, load_city_data, apply_light_theme
 

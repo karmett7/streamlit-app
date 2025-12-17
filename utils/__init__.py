@@ -2,7 +2,11 @@ import os
 import pandas as pd
 import streamlit as st
 
-DATASET_DIR = "dataset"
+# -------------------------------------------------
+# SAFE DATASET PATH (works on Streamlit Cloud)
+# -------------------------------------------------
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATASET_DIR = os.path.join(BASE_DIR, "dataset")
 
 def list_city_files():
     return sorted([
@@ -13,9 +17,10 @@ def list_city_files():
 def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
+# -------------------------------------------------
+# LIGHT THEME + WHITE SELECTBOX FIX
+# -------------------------------------------------
 def apply_light_theme():
-    import streamlit as st
-
     st.markdown(
         """
         <style>
@@ -66,3 +71,19 @@ def apply_light_theme():
         ul[data-baseweb="menu"] li:hover {
             background-color: #e6e6e6 !important;
         }
+
+        /* Metrics fix */
+        div[data-testid="stMetricLabel"],
+        div[data-testid="stMetricValue"],
+        div[data-testid="stMetricDelta"] {
+            color: #000000 !important;
+        }
+
+        /* Tables */
+        table, th, td {
+            color: #000000 !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )

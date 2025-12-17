@@ -1,11 +1,27 @@
 import streamlit as st
 from utils import apply_light_theme
 
+# -------------------------------------------------
+# MUST BE FIRST (NO CODE ABOVE THIS)
+# -------------------------------------------------
+st.set_page_config(
+    page_title="Urban Data Analysis Dashboard",
+    page_icon="📊",
+    layout="wide"
+)
+
+# -------------------------------------------------
+# Apply Global Light Theme
+# -------------------------------------------------
+apply_light_theme()
+
+# -------------------------------------------------
+# Home Page Background Image (HOME ONLY)
+# -------------------------------------------------
 def apply_home_background():
     st.markdown(
         """
         <style>
-        /* Home page background image */
         .stApp {
             background: linear-gradient(
                 rgba(255,255,255,0.85),
@@ -22,21 +38,6 @@ def apply_home_background():
     )
 
 apply_home_background()
-
-
-# -------------------------------------------------
-# MUST BE FIRST
-# -------------------------------------------------
-st.set_page_config(
-    page_title="Urban Data Analysis Dashboard",
-    page_icon="📊",
-    layout="wide"
-)
-
-# -------------------------------------------------
-# Apply Light Theme (GLOBAL CSS)
-# -------------------------------------------------
-apply_light_theme()
 
 # -------------------------------------------------
 # Page Content
@@ -92,11 +93,10 @@ st.markdown(
     "- **SO₂ (Sulfur Dioxide)** – Power plants and industrial sources\n"
     "- **O₃ (Ozone)** – Secondary atmospheric pollutant\n"
     "- **Benzene / Toluene** – Volatile organic compounds (VOCs)\n\n"
-    "These pollutants are used to study **air quality trends**, **health impact**, "
-    "and **urban environmental conditions**."
+    "These pollutants are used to study **air quality trends**, "
+    "**health impact**, and **urban environmental conditions**."
 )
 
 st.markdown("---")
 
 st.success("👉 Use the sidebar to navigate through different sections of the app.")
-

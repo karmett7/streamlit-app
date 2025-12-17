@@ -24,7 +24,9 @@ def apply_light_theme():
     st.markdown(
         """
         <style>
-        /* App background */
+        /* ==============================
+           APP BACKGROUND
+           ============================== */
         .stApp {
             background-color: #ffffff;
             color: #000000;
@@ -44,25 +46,20 @@ def apply_light_theme():
         /* ==============================
            SELECTBOX / DROPDOWN FIX
            ============================== */
-
-        /* Selectbox container */
         div[data-baseweb="select"] > div {
             background-color: #ffffff !important;
             color: #000000 !important;
             border: 1px solid #cccccc !important;
         }
 
-        /* Selected value text */
         div[data-baseweb="select"] span {
             color: #000000 !important;
         }
 
-        /* Dropdown menu */
         ul[data-baseweb="menu"] {
             background-color: #ffffff !important;
         }
 
-        /* Dropdown options */
         ul[data-baseweb="menu"] li {
             color: #000000 !important;
             background-color: #ffffff !important;
@@ -72,16 +69,34 @@ def apply_light_theme():
             background-color: #e6e6e6 !important;
         }
 
-        /* Metrics fix */
+        /* ==============================
+           METRICS FIX
+           ============================== */
         div[data-testid="stMetricLabel"],
         div[data-testid="stMetricValue"],
         div[data-testid="stMetricDelta"] {
             color: #000000 !important;
         }
 
-        /* Tables */
+        /* ==============================
+           TABLE FIX
+           ============================== */
         table, th, td {
             color: #000000 !important;
+        }
+
+        /* ==============================
+           TOP-RIGHT ICONS FIX
+           (Search, Fullscreen, Menu)
+           ============================== */
+        button[data-testid="stToolbarButton"] svg,
+        div[data-testid="stToolbar"] svg {
+            fill: #000000 !important;
+            opacity: 1 !important;
+        }
+
+        button[data-testid="stToolbarButton"]:hover svg {
+            fill: #1f77b4 !important;
         }
         </style>
         """,

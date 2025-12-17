@@ -18,7 +18,7 @@ def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
 # -------------------------------------------------
-# GLOBAL LIGHT THEME + UI FIXES
+# GLOBAL LIGHT THEME + FULL UI FIXES
 # -------------------------------------------------
 def apply_light_theme():
     st.markdown(
@@ -64,21 +64,37 @@ def apply_light_theme():
         }
 
         /* ==============================
-           DROPDOWN (OPEN STATE)
+           DROPDOWN LIST (OPEN STATE)
            ============================== */
+
+        /* Dropdown container */
+        div[data-baseweb="popover"] {
+            background-color: #ffffff !important;
+        }
+
+        /* Scrollable dropdown */
         ul[data-baseweb="menu"] {
             background-color: #ffffff !important;
             color: #000000 !important;
             border: 1px solid #cccccc !important;
         }
 
-        ul[data-baseweb="menu"] li {
+        /* Dropdown items */
+        li[data-baseweb="menu-item"] {
             background-color: #ffffff !important;
             color: #000000 !important;
         }
 
-        ul[data-baseweb="menu"] li:hover {
+        /* Hover item */
+        li[data-baseweb="menu-item"]:hover {
             background-color: #e6e6e6 !important;
+            color: #000000 !important;
+        }
+
+        /* Selected item */
+        li[aria-selected="true"] {
+            background-color: #d9d9d9 !important;
+            color: #000000 !important;
         }
 
         /* ==============================

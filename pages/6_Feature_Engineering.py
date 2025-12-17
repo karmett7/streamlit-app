@@ -9,7 +9,7 @@ apply_light_theme()
 st.title("🧠 Feature Engineering")
 
 # -------------------------------------------------
-# Helper Functions (Notebook Logic)
+# Helper Functions (from Notebook Logic)
 # -------------------------------------------------
 
 def get_indian_season(month):
@@ -70,7 +70,11 @@ if date_cols:
     df["Season"] = df["Month"].apply(get_indian_season)
 
 st.markdown("### 📅 Date-Based Features Added")
-st.dataframe(df[["Year", "Month", "Month_Name", "Season"]].dropna().head())
+st.dataframe(
+    df[["Year", "Month", "Month_Name", "Season"]]
+    .dropna()
+    .head()
+)
 
 # -------------------------------------------------
 # AQI Feature Engineering
@@ -97,7 +101,7 @@ with col2:
 st.markdown("---")
 st.markdown("### 🧹 Missing Value Handling")
 
-numeric_cols = df.select_dtypes(include="number").columns
+numeric_cols = df.select_dtypes(include="number").columns.tolist()
 
 df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
 
@@ -109,8 +113,7 @@ st.success("Missing values in numeric columns filled using mean.")
 st.markdown("---")
 st.markdown("### 🔗 Correlation-Ready Features")
 
-corr_df = df[numeric_cols]
-
+corr_df = df[numeric_cols].copy()
 st.dataframe(corr_df.head())
 
 # -------------------------------------------------
@@ -122,7 +125,15 @@ st.markdown("### ✅ Final Feature Engineered Dataset")
 final_cols = [
     "Year", "Month", "Month_Name", "Season",
     "AQI", "AQI_Bucket"
-] + list(numeric_cols)
+]
+
+# Remove duplicate columns first (CRITICAL FIX)
+df = df.loc[:, ~df.columns.duplicated()]
+
+# Add numeric columns without duplication
+for col in numeric_cols:
+    if col not in final_cols:
+        final_cols.append(col)
 
 final_df = df[final_cols].copy()
 

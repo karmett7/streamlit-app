@@ -14,33 +14,55 @@ def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
 def apply_light_theme():
+    import streamlit as st
+
     st.markdown(
         """
         <style>
+        /* App background */
         .stApp {
             background-color: #ffffff;
             color: #000000;
         }
 
+        /* Sidebar */
         section[data-testid="stSidebar"] {
             background-color: #f2f2f2;
         }
 
+        /* General text */
         h1, h2, h3, h4, h5, h6,
         p, span, label, div {
             color: #000000 !important;
         }
 
-        div[data-testid="stMetricLabel"],
-        div[data-testid="stMetricValue"],
-        div[data-testid="stMetricDelta"] {
+        /* ==============================
+           SELECTBOX / DROPDOWN FIX
+           ============================== */
+
+        /* Selectbox container */
+        div[data-baseweb="select"] > div {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border: 1px solid #cccccc !important;
+        }
+
+        /* Selected value text */
+        div[data-baseweb="select"] span {
             color: #000000 !important;
         }
 
-        table, th, td {
-            color: #000000 !important;
+        /* Dropdown menu */
+        ul[data-baseweb="menu"] {
+            background-color: #ffffff !important;
         }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+
+        /* Dropdown options */
+        ul[data-baseweb="menu"] li {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+        }
+
+        ul[data-baseweb="menu"] li:hover {
+            background-color: #e6e6e6 !important;
+        }

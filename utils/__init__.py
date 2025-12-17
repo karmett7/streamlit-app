@@ -18,7 +18,7 @@ def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
 # -------------------------------------------------
-# GLOBAL LIGHT THEME + FULL UI FIXES
+# GLOBAL LIGHT THEME + COMPLETE UI FIX
 # -------------------------------------------------
 def apply_light_theme():
     st.markdown(
@@ -64,34 +64,35 @@ def apply_light_theme():
         }
 
         /* ==============================
-           DROPDOWN LIST (OPEN STATE)
+           DROPDOWN LIST – ALL ITEMS FIX
            ============================== */
 
-        /* Dropdown container */
+        /* Whole dropdown popup */
         div[data-baseweb="popover"] {
             background-color: #ffffff !important;
         }
 
-        /* Scrollable dropdown */
+        /* Scrollable menu */
         ul[data-baseweb="menu"] {
             background-color: #ffffff !important;
             color: #000000 !important;
-            border: 1px solid #cccccc !important;
         }
 
-        /* Dropdown items */
+        /* ALL rows (not just hovered) */
+        ul[data-baseweb="menu"] li,
         li[data-baseweb="menu-item"] {
             background-color: #ffffff !important;
             color: #000000 !important;
         }
 
-        /* Hover item */
+        /* Hover row */
+        ul[data-baseweb="menu"] li:hover,
         li[data-baseweb="menu-item"]:hover {
             background-color: #e6e6e6 !important;
             color: #000000 !important;
         }
 
-        /* Selected item */
+        /* Selected row */
         li[aria-selected="true"] {
             background-color: #d9d9d9 !important;
             color: #000000 !important;
@@ -125,7 +126,7 @@ def apply_light_theme():
         }
 
         /* ==============================
-           TABLES / DATAFRAMES
+           TABLES
            ============================== */
         table, th, td {
             color: #000000 !important;
@@ -133,7 +134,6 @@ def apply_light_theme():
 
         /* ==============================
            TOP-RIGHT ICONS
-           (Search, Fullscreen, Menu)
            ============================== */
         button[data-testid="stToolbarButton"] svg,
         div[data-testid="stToolbar"] svg {

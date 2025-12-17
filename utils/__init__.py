@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 # -------------------------------------------------
-# SAFE DATASET PATH (works on Streamlit Cloud)
+# SAFE DATASET PATH (Streamlit Cloud compatible)
 # -------------------------------------------------
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATASET_DIR = os.path.join(BASE_DIR, "dataset")
@@ -18,11 +18,9 @@ def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
 # -------------------------------------------------
-# LIGHT THEME + WHITE SELECTBOX FIX
+# GLOBAL LIGHT THEME + UI FIXES
 # -------------------------------------------------
 def apply_light_theme():
-    import streamlit as st
-
     st.markdown(
         """
         <style>
@@ -34,6 +32,7 @@ def apply_light_theme():
             color: #000000;
         }
 
+        /* Sidebar */
         section[data-testid="stSidebar"] {
             background-color: #f2f2f2;
         }
@@ -56,8 +55,8 @@ def apply_light_theme():
         }
 
         div[data-baseweb="select"] input {
-            color: #000000 !important;
             background-color: #ffffff !important;
+            color: #000000 !important;
         }
 
         div[data-baseweb="select"] span {
@@ -83,6 +82,24 @@ def apply_light_theme():
         }
 
         /* ==============================
+           BUTTONS (NORMAL + DOWNLOAD)
+           ============================== */
+        div.stButton > button,
+        div[data-testid="stDownloadButton"] > button {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border: 1px solid #cccccc !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+        }
+
+        div.stButton > button:hover,
+        div[data-testid="stDownloadButton"] > button:hover {
+            background-color: #f2f2f2 !important;
+            border-color: #999999 !important;
+        }
+
+        /* ==============================
            METRICS
            ============================== */
         div[data-testid="stMetricLabel"],
@@ -92,7 +109,7 @@ def apply_light_theme():
         }
 
         /* ==============================
-           TABLES
+           TABLES / DATAFRAMES
            ============================== */
         table, th, td {
             color: #000000 !important;
@@ -100,6 +117,7 @@ def apply_light_theme():
 
         /* ==============================
            TOP-RIGHT ICONS
+           (Search, Fullscreen, Menu)
            ============================== */
         button[data-testid="stToolbarButton"] svg,
         div[data-testid="stToolbar"] svg {

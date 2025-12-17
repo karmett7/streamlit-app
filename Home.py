@@ -1,5 +1,4 @@
 import streamlit as st
-from utils import apply_light_theme
 
 def apply_home_background():
     st.markdown(

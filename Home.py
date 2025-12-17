@@ -1,4 +1,24 @@
 import streamlit as st
+
+st.set_page_config(
+    page_title="Urban Data Analysis Dashboard",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# FORCE LIGHT MODE
+st.markdown(
+    """
+    <style>
+    :root {
+        color-scheme: light;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 from utils import apply_light_theme
 
 

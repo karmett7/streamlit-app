@@ -24,127 +24,73 @@ def apply_light_theme():
     st.markdown(
         """
         <style>
-        /* ==============================
-           APP BACKGROUND
-           ============================== */
+        /* Force light theme everywhere */
+        :root {
+            color-scheme: light;
+        }
+
         .stApp {
             background-color: #ffffff;
             color: #000000;
         }
 
-        /* Sidebar */
         section[data-testid="stSidebar"] {
             background-color: #f2f2f2;
         }
 
-        /* ==============================
-           GENERAL TEXT
-           ============================== */
-        h1, h2, h3, h4, h5, h6,
-        p, span, label, div {
+        /* Text */
+        * {
             color: #000000 !important;
         }
 
-        /* ==============================
-           SELECTBOX (CLOSED STATE)
-           ============================== */
+        /* Selectbox closed */
+        div[data-baseweb="select"] {
+            background-color: #ffffff !important;
+        }
+
         div[data-baseweb="select"] > div {
             background-color: #ffffff !important;
-            color: #000000 !important;
             border: 1px solid #cccccc !important;
         }
 
-        div[data-baseweb="select"] input {
-            background-color: #ffffff !important;
-            color: #000000 !important;
-        }
-
-        div[data-baseweb="select"] span {
-            color: #000000 !important;
-        }
-
-        /* ==============================
-           DROPDOWN LIST – ALL ITEMS FIX
-           ============================== */
-
-        /* Whole dropdown popup */
+        /* Dropdown popup */
         div[data-baseweb="popover"] {
             background-color: #ffffff !important;
         }
 
-        /* Scrollable menu */
+        /* Dropdown list */
         ul[data-baseweb="menu"] {
             background-color: #ffffff !important;
-            color: #000000 !important;
         }
 
-        /* ALL rows (not just hovered) */
-        ul[data-baseweb="menu"] li,
-        li[data-baseweb="menu-item"] {
+        /* Each option */
+        ul[data-baseweb="menu"] li {
             background-color: #ffffff !important;
             color: #000000 !important;
         }
 
-        /* Hover row */
-        ul[data-baseweb="menu"] li:hover,
-        li[data-baseweb="menu-item"]:hover {
+        /* Hover */
+        ul[data-baseweb="menu"] li:hover {
             background-color: #e6e6e6 !important;
-            color: #000000 !important;
         }
 
-        /* Selected row */
-        li[aria-selected="true"] {
+        /* Selected */
+        ul[data-baseweb="menu"] li[aria-selected="true"] {
             background-color: #d9d9d9 !important;
-            color: #000000 !important;
         }
 
-        /* ==============================
-           BUTTONS (NORMAL + DOWNLOAD)
-           ============================== */
-        div.stButton > button,
-        div[data-testid="stDownloadButton"] > button {
+        /* Buttons */
+        button {
             background-color: #ffffff !important;
             color: #000000 !important;
             border: 1px solid #cccccc !important;
-            border-radius: 6px !important;
-            font-weight: 500 !important;
         }
 
-        div.stButton > button:hover,
-        div[data-testid="stDownloadButton"] > button:hover {
+        button:hover {
             background-color: #f2f2f2 !important;
-            border-color: #999999 !important;
-        }
-
-        /* ==============================
-           METRICS
-           ============================== */
-        div[data-testid="stMetricLabel"],
-        div[data-testid="stMetricValue"],
-        div[data-testid="stMetricDelta"] {
-            color: #000000 !important;
-        }
-
-        /* ==============================
-           TABLES
-           ============================== */
-        table, th, td {
-            color: #000000 !important;
-        }
-
-        /* ==============================
-           TOP-RIGHT ICONS
-           ============================== */
-        button[data-testid="stToolbarButton"] svg,
-        div[data-testid="stToolbar"] svg {
-            fill: #000000 !important;
-            opacity: 1 !important;
-        }
-
-        button[data-testid="stToolbarButton"]:hover svg {
-            fill: #1f77b4 !important;
         }
         </style>
         """,
         unsafe_allow_html=True
     )
+

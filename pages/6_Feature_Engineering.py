@@ -1,89 +1,141 @@
 import streamlit as st
 import pandas as pd
-from utils import list_city_files, load_city_data
+import numpy as np
+
+from utils import list_city_files, load_city_data, apply_light_theme
+
+apply_light_theme()
 
 st.title("🧠 Feature Engineering")
 
-from utils import apply_light_theme
-apply_light_theme()
+# -------------------------------------------------
+# Helper Functions (Notebook Logic)
+# -------------------------------------------------
+
+def get_indian_season(month):
+    if month in [12, 1, 2]:
+        return "Winter"
+    elif month in [3, 4, 5]:
+        return "Summer"
+    elif month in [6, 7, 8, 9]:
+        return "Monsoon"
+    else:
+        return "Post-Monsoon"
+
+
+def calculate_aqi(row):
+    pollutants = ["PM2.5", "PM10", "NO2", "SO2", "CO", "O3"]
+    values = [row[p] for p in pollutants if p in row and pd.notna(row[p])]
+    return np.mean(values) if values else np.nan
+
+
+def aqi_bucket(aqi):
+    if pd.isna(aqi):
+        return "Unknown"
+    elif aqi <= 50:
+        return "Good"
+    elif aqi <= 100:
+        return "Satisfactory"
+    elif aqi <= 200:
+        return "Moderate"
+    elif aqi <= 300:
+        return "Poor"
+    elif aqi <= 400:
+        return "Very Poor"
+    else:
+        return "Severe"
 
 # -------------------------------------------------
-# Description / Context
-# -------------------------------------------------
-st.markdown("""
-This section focuses on **feature engineering**, where new variables are created
-from existing data to improve **analysis and modeling performance**.
-
-Common feature engineering steps include:
-- Creating **aggregated pollution indicators**
-- Extracting **time-based features**
-- Normalizing or combining pollutant measures
-""")
-
-st.markdown("---")
-
-# -------------------------------------------------
-# Select Dataset
+# Dataset Selection
 # -------------------------------------------------
 files = list_city_files()
-selected_file = st.selectbox("Select Dataset", files)
+selected_file = st.selectbox("Select City Dataset", files)
 
 df = load_city_data(selected_file)
 
-# -------------------------------------------------
-# Basic Info
-# -------------------------------------------------
-st.markdown(f"### 📍 Dataset: `{selected_file}`")
-st.write("Rows:", df.shape[0], "| Columns:", df.shape[1])
+st.subheader(f"📍 City: {selected_file.replace('_data.csv','')}")
 
 # -------------------------------------------------
-# Feature Engineering Options
+# Date Feature Engineering
 # -------------------------------------------------
-st.markdown("### ⚙️ Create New Features")
-
-numeric_cols = df.select_dtypes(include="number").columns.tolist()
-
-if not numeric_cols:
-    st.warning("No numeric columns available for feature engineering.")
-    st.stop()
-
-# Option 1: Average Pollution Index
-st.markdown("#### 🔹 Average Pollution Index")
-
-if st.button("Create Average Pollution Feature"):
-    df["Avg_Pollution"] = df[numeric_cols].mean(axis=1)
-    st.success("Feature `Avg_Pollution` created successfully!")
-    st.dataframe(df[["Avg_Pollution"]].head())
-
-st.markdown("---")
-
-# Option 2: Date-based features
-st.markdown("#### 🔹 Date-Based Features")
-
 date_cols = [c for c in df.columns if "date" in c.lower()]
 
 if date_cols:
     date_col = date_cols[0]
     df[date_col] = pd.to_datetime(df[date_col], errors="coerce")
 
-    if st.button("Extract Year & Month"):
-        df["Year"] = df[date_col].dt.year
-        df["Month"] = df[date_col].dt.month
-        st.success("Date features `Year` and `Month` created!")
-        st.dataframe(df[[date_col, "Year", "Month"]].head())
-else:
-    st.info("No date column available for time-based feature extraction.")
+    df["Year"] = df[date_col].dt.year
+    df["Month"] = df[date_col].dt.month
+    df["Month_Name"] = df[date_col].dt.month_name()
+    df["Season"] = df["Month"].apply(get_indian_season)
 
+st.markdown("### 📅 Date-Based Features Added")
+st.dataframe(df[["Year", "Month", "Month_Name", "Season"]].dropna().head())
+
+# -------------------------------------------------
+# AQI Feature Engineering
+# -------------------------------------------------
 st.markdown("---")
+st.markdown("### 🌫️ AQI Feature Engineering")
+
+df["AQI"] = df.apply(calculate_aqi, axis=1)
+df["AQI_Bucket"] = df["AQI"].apply(aqi_bucket)
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("#### AQI Statistics")
+    st.write(df["AQI"].describe())
+
+with col2:
+    st.markdown("#### AQI Bucket Distribution")
+    st.bar_chart(df["AQI_Bucket"].value_counts())
 
 # -------------------------------------------------
-# Preview Engineered Dataset
+# Missing Value Handling
 # -------------------------------------------------
-st.markdown("### 👀 Preview Engineered Data")
-st.dataframe(df.head())
+st.markdown("---")
+st.markdown("### 🧹 Missing Value Handling")
 
-st.markdown("""
-📝 **Note:**  
-These engineered features can be used in **EDA**, **Geo-spatial analysis**,  
-or as inputs for **machine learning models**.
-""")
+numeric_cols = df.select_dtypes(include="number").columns
+
+df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
+
+st.success("Missing values in numeric columns filled using mean.")
+
+# -------------------------------------------------
+# Correlation-Ready Dataset
+# -------------------------------------------------
+st.markdown("---")
+st.markdown("### 🔗 Correlation-Ready Features")
+
+corr_df = df[numeric_cols]
+
+st.dataframe(corr_df.head())
+
+# -------------------------------------------------
+# Final Feature Engineered Dataset
+# -------------------------------------------------
+st.markdown("---")
+st.markdown("### ✅ Final Feature Engineered Dataset")
+
+final_cols = [
+    "Year", "Month", "Month_Name", "Season",
+    "AQI", "AQI_Bucket"
+] + list(numeric_cols)
+
+final_df = df[final_cols].copy()
+
+st.dataframe(final_df.head())
+
+# -------------------------------------------------
+# Download Option
+# -------------------------------------------------
+st.download_button(
+    label="⬇️ Download Feature Engineered Dataset",
+    data=final_df.to_csv(index=False),
+    file_name=f"features_{selected_file}",
+    mime="text/csv"
+)
+
+st.success("Feature engineering completed successfully.")

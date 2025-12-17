@@ -18,17 +18,15 @@ def load_city_data(filename):
     return pd.read_csv(os.path.join(DATASET_DIR, filename))
 
 # -------------------------------------------------
-# GLOBAL LIGHT THEME + COMPLETE UI FIX
+# GLOBAL LIGHT THEME + DROPDOWN FONT FIX
 # -------------------------------------------------
 def apply_light_theme():
     st.markdown(
         """
         <style>
-        /* Force light theme everywhere */
-        :root {
-            color-scheme: light;
-        }
-
+        /* ==============================
+           APP + SIDEBAR
+           ============================== */
         .stApp {
             background-color: #ffffff;
             color: #000000;
@@ -38,59 +36,99 @@ def apply_light_theme():
             background-color: #f2f2f2;
         }
 
-        /* Text */
-        * {
-            color: #000000 !important;
+        /* ==============================
+           GENERAL TEXT
+           ============================== */
+        h1, h2, h3, h4, h5, h6,
+        p, span, label, div {
+            color: #000000;
         }
 
-        /* Selectbox closed */
-        div[data-baseweb="select"] {
-            background-color: #ffffff !important;
-        }
-
+        /* ==============================
+           SELECTBOX (CLOSED)
+           ============================== */
         div[data-baseweb="select"] > div {
             background-color: #ffffff !important;
             border: 1px solid #cccccc !important;
         }
 
-        /* Dropdown popup */
-        div[data-baseweb="popover"] {
-            background-color: #ffffff !important;
-        }
-
-        /* Dropdown list */
-        ul[data-baseweb="menu"] {
-            background-color: #ffffff !important;
-        }
-
-        /* Each option */
-        ul[data-baseweb="menu"] li {
-            background-color: #ffffff !important;
+        div[data-baseweb="select"] span {
             color: #000000 !important;
+            font-weight: 500;
         }
 
-        /* Hover */
+        /* ==============================
+           DROPDOWN LIST (OPEN)
+           ============================== */
+
+        /* Keep background dark (Streamlit default) */
+        ul[data-baseweb="menu"] {
+            background-color: #111827 !important;
+        }
+
+        /* FORCE WHITE TEXT FOR ALL OPTIONS */
+        ul[data-baseweb="menu"] *,
+        li[data-baseweb="menu-item"] * {
+            color: #ffffff !important;
+            font-weight: 500;
+        }
+
+        /* Hovered option */
         ul[data-baseweb="menu"] li:hover {
-            background-color: #e6e6e6 !important;
+            background-color: #1f2937 !important;
         }
 
-        /* Selected */
-        ul[data-baseweb="menu"] li[aria-selected="true"] {
-            background-color: #d9d9d9 !important;
+        /* Selected option */
+        li[aria-selected="true"] {
+            background-color: #374151 !important;
         }
 
-        /* Buttons */
-        button {
+        /* ==============================
+           BUTTONS (NORMAL + DOWNLOAD)
+           ============================== */
+        div.stButton > button,
+        div[data-testid="stDownloadButton"] > button {
             background-color: #ffffff !important;
             color: #000000 !important;
             border: 1px solid #cccccc !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
         }
 
-        button:hover {
+        div.stButton > button:hover,
+        div[data-testid="stDownloadButton"] > button:hover {
             background-color: #f2f2f2 !important;
+        }
+
+        /* ==============================
+           METRICS
+           ============================== */
+        div[data-testid="stMetricLabel"],
+        div[data-testid="stMetricValue"],
+        div[data-testid="stMetricDelta"] {
+            color: #000000 !important;
+        }
+
+        /* ==============================
+           TABLES
+           ============================== */
+        table, th, td {
+            color: #000000 !important;
+        }
+
+        /* ==============================
+           TOP RIGHT ICONS
+           ============================== */
+        button[data-testid="stToolbarButton"] svg,
+        div[data-testid="stToolbar"] svg {
+            fill: #000000 !important;
+            opacity: 1 !important;
+        }
+
+        button[data-testid="stToolbarButton"]:hover svg {
+            fill: #2563eb !important;
         }
         </style>
         """,
         unsafe_allow_html=True
     )
-

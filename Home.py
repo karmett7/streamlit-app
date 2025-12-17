@@ -1,23 +1,21 @@
 import streamlit as st
 from utils import apply_light_theme
 
-# -------------------------------------------------
+
 # MUST BE FIRST (NO CODE ABOVE THIS)
-# -------------------------------------------------
+
 st.set_page_config(
     page_title="Urban Data Analysis Dashboard",
     page_icon="📊",
     layout="wide"
 )
 
-# -------------------------------------------------
 # Apply Global Light Theme
-# -------------------------------------------------
+
 apply_light_theme()
 
-# -------------------------------------------------
 # Home Page Background Image (HOME ONLY)
-# -------------------------------------------------
+
 def apply_home_background():
     st.markdown(
         """
@@ -39,9 +37,8 @@ def apply_home_background():
 
 apply_home_background()
 
-# -------------------------------------------------
 # Page Content
-# -------------------------------------------------
+
 st.title("📊 Urban Data Analysis Dashboard")
 
 st.markdown(
@@ -53,9 +50,9 @@ st.markdown(
 
 st.markdown("---")
 
-# -------------------------------------------------
+
 # Cities Covered
-# -------------------------------------------------
+
 st.markdown("## 🏙️ Cities Covered")
 
 st.markdown(
@@ -77,9 +74,8 @@ st.markdown(
 
 st.markdown("---")
 
-# -------------------------------------------------
 # Pollutants Explained
-# -------------------------------------------------
+
 st.markdown("## 🌫️ Pollutants Analyzed")
 
 st.markdown(
